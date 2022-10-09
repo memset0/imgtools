@@ -1,2 +1,4 @@
+from imgtools import app
+
 def start():
-    print('start!')
+    app.launch()

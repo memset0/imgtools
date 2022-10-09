@@ -5,7 +5,7 @@ import numpy as np
 import numba as nb
 
 sys.path.append(os.getcwd())
-from imgtools.utils import test
+from imgtools.utils import test, img404
 
 
 def to_gray(img):

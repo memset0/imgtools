@@ -5,7 +5,7 @@ import numpy as np
 import numba as nb
 
 sys.path.append(os.getcwd())
-from imgtools.utils import test, img404
+from imgtools.utils import test
 
 
 def to_gray(img):
@@ -13,6 +13,7 @@ def to_gray(img):
 
 
 def to_rgb_numba(img, r=255, g=0, b=0):
+    r, g, b = int(r), int(g), int(b)
 
     @nb.njit
     def transform(rgb, gray, r, g, b, w, h):
@@ -33,6 +34,7 @@ def to_rgb_numba(img, r=255, g=0, b=0):
 
 
 def to_rgb(img, r=255, g=0, b=0):
+    r, g, b = int(r), int(g), int(b)
     gray = to_gray(img)
     gray_rev = np.subtract(255, gray)
     col = np.array([255 - r, 255 - g, 255 - b], np.uint16)

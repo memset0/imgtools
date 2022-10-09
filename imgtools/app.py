@@ -15,5 +15,5 @@ with gr.Blocks() as app:
             with gr.Row():
                 gsc_input = gr.Image()
                 gsc_output = gr.Image()
-            gsc_button = gr.Button("Sobmit")
+            gsc_button = gr.Button("Submit")
             gsc_button.click(grayscale.to_rgb, inputs=gsc_input, outputs=gsc_output)

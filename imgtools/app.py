@@ -1,11 +1,13 @@
 import gradio as gr
-from imgtools.utils import read_file, asset_path
-from imgtools.modules import grayscale
+from imgtools.utils import gradio, read_file, asset_path
+from imgtools.modules import grayscale, deepen
 
 with gr.Blocks(
         title="mem's imgtools",
         css=read_file(asset_path("style.css")),
 ) as app:
+    error_box = gr.Textbox(label="Error", visible=False)
+    gradio.error_box = error_box
     gr.Markdown("\n".join([
         "Yet another simple image tools collection by memset0. ",
         "[source code](https://github.com/memset0/imgtools)",
@@ -34,6 +36,22 @@ with gr.Blocks(
             submit_button.click(
                 grayscale.to_rgb,
                 inputs=[input_img, input_r, input_g, input_b],
+                outputs=output,
+            )
+            examples = gr.Examples(examples=[[asset_path("example.png")]], inputs=[input_img])
+        with gr.TabItem('Deepen'):
+            with gr.Row():
+                input_scale = gr.Slider(label='Scale (%)', minimum=0, maximum=999, value=100)
+                input_mode = gr.Radio(['Darker', 'Lighter'], label="Mode", value="Darker")
+            with gr.Row():
+                with gr.Column():
+                    input_img = gr.Image()
+                    submit_button = gr.Button("Submit")
+                with gr.Column():
+                    output = gr.Image()
+            submit_button.click(
+                deepen.apply,
+                inputs=[input_img, input_scale, input_mode],
                 outputs=output,
             )
             examples = gr.Examples(examples=[[asset_path("example.png")]], inputs=[input_img])
